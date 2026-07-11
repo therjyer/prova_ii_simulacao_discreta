@@ -1,3 +1,43 @@
+Para a implementação computacional deste projeto de simulação, propondo uma solução de alto desempenho que contemple a lógica de eventos discretos e uma interface gráfica moderna, estabelece-se uma arquitetura baseada em microsserviços ou separação clara entre *Backend* (motor de simulação) e *Frontend* (interface do usuário).
+
+### 1. Bibliotecas Sugeridas
+
+Além do uso obrigatório do `simpy` para a simulação de eventos discretos, a integração de um motor em Python com uma interface baseada em TypeScript, HTML e CSS requer um ecossistema sólido. Apresentam-se 10 bibliotecas adicionais recomendadas para o projeto:
+
+**Backend (Python):**
+
+1. **FastAPI:** Framework assíncrono de altíssimo desempenho para criar a API REST que comunicará os resultados da simulação para a interface gráfica.
+2. **Uvicorn:** Servidor web ASGI de alta velocidade necessário para rodar o FastAPI.
+3. **Pandas:** Essencial para a leitura e manipulação inicial do arquivo `chegadas.csv`, além de tabular os dados dos resultados (tempos em fila, gargalos) para envio ao front-end.
+4. **Pydantic:** Utilizado em conjunto com FastAPI para validação estrita de dados e tipagem forte no envio e recebimento de configurações de cenários.
+5. **Pytest:** Para garantir a integridade da lógica através de testes unitários automatizados.
+
+**Frontend (TypeScript / Web):**
+6. **React (com TypeScript):** Biblioteca fundamental para a construção de interfaces de usuário reativas e baseadas em componentes (englobando HTML e TS).
+7. **Tailwind CSS:** Framework utilitário de CSS que permite a estilização rápida, responsiva e altamente otimizada da interface gráfica.
+8. **Axios:** Cliente HTTP para realizar as requisições assíncronas do front-end para a API em Python.
+9. **Recharts (ou Chart.js):** Biblioteca gráfica para renderizar os *dashboards* e gráficos que demonstrarão visualmente os gargalos do sistema e o impacto econômico dos cenários sugeridos.
+10. **Vite:** Ferramenta de *build* moderna e extremamente rápida para agrupar e compilar o código TypeScript, HTML e CSS.
+
+---
+
+### 2. Fundamentos de Orientação a Objetos e Padrões de Projeto
+
+O projeto deve aplicar os pilares da Orientação a Objetos (Encapsulamento, Abstração, Herança e Polimorfismo) para modelar as entidades do aeroporto. Por exemplo, uma classe abstrata `Aeronave` pode derivar para `AeronavePequena` e `AeronaveGrande`, implementando polimorfismo nos tempos de atendimento de cada tipo.
+
+Para garantir a melhor otimização e organização do código, sugere-se a implementação dos seguintes Padrões de Projeto (*Design Patterns*):
+
+* **Factory Method (Padrão Criacional):** Utilizado no processo de leitura do `chegadas.csv`. A fábrica lerá a coluna `tipo` ("P" ou "G") e instanciará automaticamente a classe correta da aeronave com suas propriedades e tempos específicos.
+* **Singleton (Padrão Criacional):** O ambiente de simulação do SimPy (`simpy.Environment`) e os recursos centralizados (Pistas, Plataformas, Hangares) devem utilizar o Singleton para garantir que exista apenas uma única instância do estado do aeroporto compartilhada por todos os processos durante uma rodada de simulação.
+* **Observer (Padrão Comportamental):** Essencial para o rastreamento de gargalos. O sistema de monitoramento atua como um "Observador" que é notificado toda vez que uma fila aumenta além de um limite aceitável ou quando o estado de um recurso muda, registrando essas métricas em tempo real sem acoplar fortemente a lógica de negócio à lógica de coleta de dados.
+
+---
+
+### 3. Estrutura de Diretórios do Projeto
+
+Abaixo, detalha-se uma proposta de estrutura de pastas para organizar o desenvolvimento computacional, mantendo a escalabilidade e o atendimento estrito ao que deve ser entregue na disciplina:
+
+```text
 projeto_aeroporto/
 │
 ├── backend/                        # Motor de Simulação em Python
@@ -28,3 +68,7 @@ projeto_aeroporto/
     │   └── App.tsx                 # Raiz da aplicação e rotas front-end
     ├── package.json                # Dependências Node (react, vite, tailwind, etc)
     └── tailwind.config.js          # Configuração do compilador CSS
+
+```
+
+Esta arquitetura garante que a modelagem matemática pesada fique sob responsabilidade do Python (*Backend*), onde o SimPy opera com eficiência, enquanto a visualização dos resultados, a submissão de novos cenários para melhoria de gargalos e a análise de viabilidade econômica ocorram de maneira interativa através de um navegador moderno (*Frontend*). Ao final do processo, todos os artefatos, incluindo o documento descritivo `README.md`, devem ser compactados para a entrega no formato estipulado.
