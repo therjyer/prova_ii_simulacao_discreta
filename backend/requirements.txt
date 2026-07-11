@@ -1,0 +1,11 @@
+Dependências:
+
+FastAPI: Framework assíncrono de altíssimo desempenho para criar a API REST que comunicará os resultados da simulação para a interface gráfica.
+
+Uvicorn: Servidor web ASGI de alta velocidade necessário para rodar o FastAPI.
+
+Pandas: Essencial para a leitura e manipulação inicial do arquivo chegadas.csv, além de tabular os dados dos resultados (tempos em fila, gargalos) para envio ao front-end.
+
+Pydantic: Utilizado em conjunto com FastAPI para validação estrita de dados e tipagem forte no envio e recebimento de configurações de cenários.
+
+Pytest: Para garantir a integridade da lógica através de testes unitários automatizados.

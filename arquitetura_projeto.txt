@@ -1,0 +1,30 @@
+projeto_aeroporto/
+│
+├── backend/                        # Motor de Simulação em Python
+│   ├── data/
+│   │   └── chegadas.csv            # Base de dados fornecida
+│   ├── src/
+│   │   ├── api/
+│   │   │   └── routes.py           # Endpoints FastAPI (ex: /simular, /cenarios)
+│   │   ├── models/
+│   │   │   ├── aeronave.py         # Classes (Base, Pequeno, Grande) + Factory Method
+│   │   │   └── aeroporto.py        # Recursos SimPy e lógica Singleton
+│   │   ├── simulation/
+│   │   │   ├── core.py             # Lógica de execução do simpy.Environment
+│   │   │   └── monitor.py          # Implementação do padrão Observer para métricas
+│   │   └── main.py                 # Ponto de entrada do servidor ASGI (Uvicorn)
+│   ├── requirements.txt            # Dependências do Python (simpy, fastapi, pandas...)
+│   └── README.md                   # Artefato textual descritivo exigido para a avaliação
+│
+└── frontend/                       # Interface Gráfica em TypeScript/React
+    ├── public/
+    │   └── index.html              # Arquivo HTML principal
+    ├── src/
+    │   ├── components/             # Componentes visuais (Botões, Inputs de Cenários)
+    │   ├── pages/                  # Páginas (Dashboard principal de resultados)
+    │   ├── services/               # Integração com Axios para chamar a API Python
+    │   ├── styles/                 # Arquivos de estilização genérica e configurações CSS
+    │   ├── types/                  # Definições de Interfaces TypeScript (Payloads de API)
+    │   └── App.tsx                 # Raiz da aplicação e rotas front-end
+    ├── package.json                # Dependências Node (react, vite, tailwind, etc)
+    └── tailwind.config.js          # Configuração do compilador CSS

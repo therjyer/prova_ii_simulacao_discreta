@@ -1,0 +1,56 @@
+graph TD
+    classDef queue fill:#f9f,stroke:#333,stroke-width:2px,shape:ellipse;
+    classDef activity fill:#bbf,stroke:#333,stroke-width:2px,shape:rect;
+    classDef resource fill:#ffb,stroke:#333,stroke-width:2px,shape:hexagon;
+
+    %% Chegada da Entidade
+    Chegada((Chegada da Aeronave)):::queue
+
+    %% Filas de Entidades (Estados Inativos)
+    FilaPouso((Aguardando Pista \npara Pouso)):::queue
+    FilaDesemb((Aguardando Plataforma \npara Desembarque)):::queue
+    FilaHangar((Aguardando Hangar \npara Preparo)):::queue
+    FilaEmbarq((Aguardando Plataforma \npara Embarque)):::queue
+    FilaDecol((Aguardando Pista \npara Decolagem)):::queue
+    Fim((Saída do Sistema)):::queue
+
+    %% Atividades (Estados Ativos)
+    Pouso[Pouso na Pista]:::activity
+    Desembarque[Desembarque na Plataforma]:::activity
+    Hangar[Preparativos no Hangar]:::activity
+    Embarque[Embarque na Plataforma]:::activity
+    Decolagem[Decolagem na Pista]:::activity
+
+    %% Estados Ociosos dos Recursos
+    Pistas{{Pistas Disponíveis}}:::resource
+    Plataformas{{Plataformas Disponíveis}}:::resource
+    Hangares{{Hangares Disponíveis}}:::resource
+
+    %% Ciclo de Vida da Aeronave
+    Chegada --> FilaPouso
+    FilaPouso --> Pouso
+    Pouso --> FilaDesemb
+    FilaDesemb --> Desembarque
+    Desembarque --> FilaHangar
+    FilaHangar --> Hangar
+    Hangar --> FilaEmbarq
+    FilaEmbarq --> Embarque
+    Embarque --> FilaDecol
+    FilaDecol --> Decolagem
+    Decolagem --> Fim
+
+    %% Ciclo de Vida das Pistas
+    Pistas -. Aloca .-> Pouso
+    Pouso -. Libera .-> Pistas
+    Pistas -. Aloca .-> Decolagem
+    Decolagem -. Libera .-> Pistas
+
+    %% Ciclo de Vida das Plataformas
+    Plataformas -. Aloca .-> Desembarque
+    Desembarque -. Libera .-> Plataformas
+    Plataformas -. Aloca .-> Embarque
+    Embarque -. Libera .-> Plataformas
+
+    %% Ciclo de Vida dos Hangares
+    Hangares -. Aloca .-> Hangar
+    Hangar -. Libera .-> Hangares
